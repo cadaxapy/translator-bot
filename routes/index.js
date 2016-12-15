@@ -23,12 +23,12 @@ if(event === "user/follow")
 {
 	console.log("user follows");
    var userId=req.body.data.id;
-   newChat(userId,TOKEN,function(err,res,body){
+   newChat(userId,TOKEN, ip, function(err,res,body){
    	message=date()+"Я могу перевести предложения с одного языка на другой. Чтобы поменять язык, пожалуйста, укажите язык, с которого Вы хотели бы осуществить перевод, а затем язык, на который хотите перевести. Например:'en ru'. Со списком языков можно ознакомиться по команде '/list'"+"\n"+" Перевод осуществляется сервисом «Яндекс. Переводчик»";
      console.log(message);
      var chat_id=body.data.membership.chat_id;
      db.createDefDb(chat_id);
-   	sms(message,chat_id,TOKEN);
+   	sms(message,chat_id,TOKEN, ip);
    })
 }
 
@@ -46,11 +46,11 @@ if(event==="message/new")
       b=b+key+"="+lang[key]+"\n";
      }
      console.log(b);
-     sms(b,chatId,TOKEN);
+     sms(b,chatId,TOKEN,ip);
   }
   if(req.body.data.type != "text/plain")
   	{
-  sms("Неправильный ввод, или такого слова в интересующем Вас языке не существует. Пожалуйста, введите текст.",chatId,TOKEN);
+  sms("Неправильный ввод, или такого слова в интересующем Вас языке не существует. Пожалуйста, введите текст.",chatId,TOKEN,ip);
   stmt=1;
   }
       var text=deleteSpace(content).split(" ");
@@ -77,7 +77,7 @@ if(event==="message/new")
              if(x!=0&&y!=0)
                 {
                   console.log("Перевод изменен с "+a+" на "+b);
-                  sms("Перевод изменен с "+a+" на "+b,chatId,TOKEN);
+                  sms("Перевод изменен с "+a+" на "+b,chatId,TOKEN, ip);
                   db.addDb(source,target,chatId);
               stmt=1; 
                 }
@@ -89,7 +89,7 @@ if(event==="message/new")
         
  	     result=>{
          console.log(result);
-          sms(result,chatId,TOKEN)
+          sms(result,chatId,TOKEN, ip)
  	      })
         }) 
        }
