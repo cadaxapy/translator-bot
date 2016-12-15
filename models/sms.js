@@ -1,9 +1,15 @@
+
 var request=require("request");
 
 
-module.exports=function(message,chatId,token,callback){
+module.exports=function(message, chatId, token, ip, callback){
+	if(ip === "::ffff:77.235.20.133") {
+    url = "http://77.235.20.133:3000/chats/"
+  }
+  else
+    url = "http://api.kamp.kg/chats/";
 	var data={
-	url: "http://api.kamp.kg/chats/" + chatId + "/write",
+	url: url + chatId + "/write",
 	method:"POST",
 	headers:{
 		'X-Namba-Auth-Token': token

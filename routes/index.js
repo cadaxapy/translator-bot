@@ -14,6 +14,7 @@ router.get('/', function(req, res, next) {
   
 });
 router.post('/',function(req,res,next){
+  var ip = req.connection.remoteAddress;
 db.createDb();
 var event=req.body.event;
 var chatId=req.body.data.chat_id;
