@@ -8,7 +8,7 @@ module.exports=function(userId,token, ip, callback)
     url = "http://77.235.20.133:3000/chats/create"
   }
   else
-    url = "http://api.kamp.kg/chats/create";
+    url = "http://api.namba1.co/chats/create";
   var data={
   url: url,
   method:"POST",
