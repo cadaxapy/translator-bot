@@ -24,7 +24,7 @@ if(event === "user/follow")
 	console.log("user follows");
    var userId=req.body.data.id;
    newChat(userId,TOKEN, ip, function(err,res,body){
-   	message=date()+"Я могу перевести предложения с одного языка на другой. Чтобы поменять язык, пожалуйста, укажите язык, с которого Вы хотели бы осуществить перевод, а затем язык, на который хотите перевести. Например:'en ru'. Со списком языков можно ознакомиться по команде '/list'"+"\n"+" Перевод осуществляется сервисом «Яндекс. Переводчик»";
+   	message=date()+"Я могу перевести предложения с одного языка на другой. Чтобы поменять язык, пожалуйста, укажите язык, с которого Вы хотели бы осуществить перевод, а затем язык, на который хотите перевести. Например:'en ru'. Со списком языков можно ознакомиться по команде 'list'"+"\n"+" Перевод осуществляется сервисом «Яндекс. Переводчик»";
      console.log(message);
      var chat_id=body.data.membership.chat_id;
      db.createDefDb(chat_id);
@@ -37,7 +37,7 @@ if(event==="message/new")
   
 	console.log("new message");
   var stmt=0;
-  if(deleteSpace(content).toLowerCase()==="/list")
+  if(deleteSpace(content).toLowerCase()==="list")
   {
     stmt=1;
     var b="";
