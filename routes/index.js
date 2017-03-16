@@ -7,7 +7,7 @@ var newChat=require("../models/newchat");
 var date=require("../models/date.js");
 var translate=require("../models/translate");
 var router = express.Router();
-var TOKEN="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTA5LCJwaG9uZSI6IjA3MDIxNjEwNjciLCJwYXNzd29yZCI6ImMwZWNiZmNjYTg2M2E1MTM3MGM5NjI5MmI1ZjQ2NTdmIiwiaXNCb3QiOnRydWUsImNvdW50cnkiOnRydWUsImlhdCI6MTQ3NzkxNjA3M30.U5-GFQHLbBt2ioOUGmKYvwfoSXsF4EKWvcWM_SanLUc";
+var TOKEN="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NjE5NDIzNTMwLCJwaG9uZSI6IjEyMzQ1Njc4OCIsInBhc3N3b3JkIjoiJDJhJDEwJDlzVTZCTUxnWGhzb0VVVVg3UTZxaXVsbUZza3AuTjR6VEUwVFFSYWtFc2huOTE5bTdOMml5IiwiaXNCb3QiOnRydWUsImNvdW50cnkiOnRydWUsImlhdCI6MTQ4OTY2MzQwNH0.npkrRqf316M4Y2AkkwxXxN0VdD8lErCFklM-8rLZ4Bc";
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Translator' });
