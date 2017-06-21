@@ -7,35 +7,46 @@ var newChat=require("../models/newchat");
 var date=require("../models/date.js");
 var translate=require("../models/translate");
 var router = express.Router();
-var TOKEN="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NjE5NDIzNTMwLCJwaG9uZSI6IjEyMzQ1Njc4OCIsInBhc3N3b3JkIjoiJDJhJDEwJDlzVTZCTUxnWGhzb0VVVVg3UTZxaXVsbUZza3AuTjR6VEUwVFFSYWtFc2huOTE5bTdOMml5IiwiaXNCb3QiOnRydWUsImNvdW50cnkiOnRydWUsImlhdCI6MTQ4OTY2MzQwNH0.npkrRqf316M4Y2AkkwxXxN0VdD8lErCFklM-8rLZ4Bc";
+var token = '';
+//var TOKEN="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NjE5NDIzNTMwLCJwaG9uZSI6IjEyMzQ1Njc4OCIsInBhc3N3b3JkIjoiJDJhJDEwJDlzVTZCTUxnWGhzb0VVVVg3UTZxaXVsbUZza3AuTjR6VEUwVFFSYWtFc2huOTE5bTdOMml5IiwiaXNCb3QiOnRydWUsImNvdW50cnkiOnRydWUsImlhdCI6MTQ4OTY2MzQwNH0.npkrRqf316M4Y2AkkwxXxN0VdD8lErCFklM-8rLZ4Bc";
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Translator' });
   
 });
-router.post('/',function(req,res,next){
-  var ip = req.connection.remoteAddress;
+router.post('/',function(req,res,next)  {
+ var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NjE5NDIzNTMwLCJwaG9uZSI6IjEyMzQ1Njc4OCIsInBhc3N3b3JkIjoiJDJhJDEwJDlzVTZCTUxnWGhzb0VVVVg3UTZxaXVsbUZza3AuTjR6VEUwVFFSYWtFc2huOTE5bTdOMml5IiwiaXNCb3QiOnRydWUsImNvdW50cnkiOnRydWUsImlhdCI6MTQ4OTY2MzQwNH0.npkrRqf316M4Y2AkkwxXxN0VdD8lErCFklM-8rLZ4Bc';
+ eventControl(req, res, token);
+})
+
+router.post('/kz', function(req, res, next) {
+  var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjY2NTI5OTc2LCJwaG9uZSI6IjYxMDgzIiwicGFzc3dvcmQiOiIkMmEkMTAkUzRiM0JSM3M4OElCdTRiWmh5anMwZU5pSXNYLzhxdEU3Qkx4WFNlZzA4Y0RsZXZMYmlkc2EiLCJpc0JvdCI6dHJ1ZSwiY291bnRyeSI6dHJ1ZSwiaWF0IjoxNDk4MDM5ODY3fQ.wyCG34AVZmyYNNP6k9-HDxZWpDvfvyqfgT3C73T6gHI';
+  eventControl(req, res, next);
+})
+
+var eventControl = function(req, res, TOKEN) {
+    var ip = req.connection.remoteAddress;
 db.createDb();
 var event=req.body.event;
 var chatId=req.body.data.chat_id;
     var content=req.body.data.content;
 if(event === "user/follow")
 {
-	console.log("user follows");
+  console.log("user follows");
    var userId=req.body.data.id;
    newChat(userId,TOKEN, ip, function(err,res,body){
-   	message=date()+"Я могу перевести предложения с одного языка на другой. Чтобы поменять язык, пожалуйста, укажите язык, с которого Вы хотели бы осуществить перевод, а затем язык, на который хотите перевести. Например:'en ru'. Со списком языков можно ознакомиться по команде 'list'"+"\n"+" Перевод осуществляется сервисом «Яндекс. Переводчик»";
+    message=date()+"Я могу перевести предложения с одного языка на другой. Чтобы поменять язык, пожалуйста, укажите язык, с которого Вы хотели бы осуществить перевод, а затем язык, на который хотите перевести. Например:'en ru'. Со списком языков можно ознакомиться по команде 'list'"+"\n"+" Перевод осуществляется сервисом «Яндекс. Переводчик»";
      console.log(message);
      var chat_id=body.data.membership.chat_id;
      db.createDefDb(chat_id);
-   	sms(message,chat_id,TOKEN, ip);
+    sms(message,chat_id,TOKEN, ip);
    })
 }
 
 if(event==="message/new")
 {
   
-	console.log("new message");
+  console.log("new message");
   var stmt=0;
   if(deleteSpace(content).toLowerCase()==="list")
   {
@@ -49,7 +60,7 @@ if(event==="message/new")
      sms(b,chatId,TOKEN,ip);
   }
   if(req.body.data.type != "text/plain")
-  	{
+    {
   sms("Неправильный ввод, или такого слова в интересующем Вас языке не существует. Пожалуйста, введите текст.",chatId,TOKEN,ip);
   stmt=1;
   }
@@ -87,14 +98,14 @@ if(event==="message/new")
             console.log(source,target);
          translate(content,source,target).then(
         
- 	     result=>{
+       result=>{
          console.log(result);
           sms(result,chatId,TOKEN, ip)
- 	      })
+        })
         }) 
        }
       
 }
 res.end();
-})
+}
 module.exports = router;
