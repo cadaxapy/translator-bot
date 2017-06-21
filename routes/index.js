@@ -21,7 +21,7 @@ router.post('/',function(req,res,next)  {
 
 router.post('/kz', function(req, res, next) {
   var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjY2NTI5OTc2LCJwaG9uZSI6IjYxMDgzIiwicGFzc3dvcmQiOiIkMmEkMTAkUzRiM0JSM3M4OElCdTRiWmh5anMwZU5pSXNYLzhxdEU3Qkx4WFNlZzA4Y0RsZXZMYmlkc2EiLCJpc0JvdCI6dHJ1ZSwiY291bnRyeSI6dHJ1ZSwiaWF0IjoxNDk4MDM5ODY3fQ.wyCG34AVZmyYNNP6k9-HDxZWpDvfvyqfgT3C73T6gHI';
-  eventControl(req, res, next);
+  eventControl(req, res, token);
 })
 
 var eventControl = function(req, res, TOKEN) {
